@@ -1,15 +1,28 @@
 <template>
   <!-- <div class="container"> -->
-  <div :class="weather.main && weather.main.temp > 16 ? 'container warm' : 'container'">
+  <div
+    :class="
+      weather.main && weather.main.temp > 16 ? 'container warm' : 'container'
+    "
+  >
     <div class="search-box">
       <!-- <input type="text" placeholder="Search...." class="search-bar" /> -->
-      <input 
+      <!-- <input 
 				type="text" 
 				placeholder="Search...." 
 				class="search-bar" 
 				v-model="query"
 				@keyup.enter="fetchWeather"
-			/>
+			/> -->
+      <select v-model="query" @change="fetchWeather">
+        <option
+          v-for="country in countrys"
+          :key="country.id"
+          :value="country.name"
+        >
+          {{ country.text }}
+        </option>
+      </select>
     </div>
 
     <div class="weather-wrapper" v-if="weather.main">
@@ -38,6 +51,11 @@ export default {
       query: "Taichung",
       weather: {},
       date: "",
+      countrys: [
+        { id: "1", name: "Taipei", text: "台北" },
+        { id: "2", name: "Tainan", text: "台南" },
+        { id: "3", name: "Kaohsiung", text: "高雄" },
+      ],
     };
   },
   created() {
@@ -77,7 +95,7 @@ export default {
   background-size: cover;
   background-position: 50%;
   transition: 0.5s;
-	opacity: 0.6;
+  opacity: 0.6;
 }
 
 .container.warm {
